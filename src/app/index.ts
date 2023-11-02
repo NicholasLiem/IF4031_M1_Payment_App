@@ -5,6 +5,15 @@ import cookieParser from 'cookie-parser';
 import {routes} from "./routes";
 import {initContainer} from "./bootstrap";
 
+/**
+ * Author: Nicholas Liem
+ * Repository: https://github.com/NicholasLiem/Express_TS_REST_Boilerplate
+ * License: MIT License
+ * Description: This is a template repository created by Nicholas Liem.
+ *              It is provided under the MIT license.
+ * Date: 02/10/2023
+ */
+
 const app = express();
 const port = process.env.PORT || 3000;
 dotEnv.config();
