@@ -14,9 +14,10 @@ import {initContainer} from "./bootstrap";
  * Date: 02/10/2023
  */
 
+dotEnv.config();
 const app = express();
 const port = process.env.PORT || 3000;
-dotEnv.config();
+
 
 app.use(express.json());
 app.use(cookieParser());

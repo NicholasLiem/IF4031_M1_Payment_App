@@ -1,13 +1,11 @@
 import {Express} from "express";
-import {userRoutes} from "./adapters/express/routes/users.route";
-import {authRoutes} from "./adapters/express/routes/auth.route";
 import healthRoutes from "./adapters/express/routes/health.route";
-import {UserController} from "./application/controllers/user.controller";
 import {ServiceContainer} from "./containers/service.container";
+import {InvoiceController} from "./application/controllers/invoice.controller";
+import {invoiceRoutes} from "./adapters/express/routes/invoice.route";
 
 export function routes(app: Express, container: ServiceContainer){
-    const userController = new UserController(container.getUserService());
+    const invoiceController = new InvoiceController(container.getInvoiceService());
     app.use('/api/v1/health', healthRoutes);
-    app.use('/api/v1/users', userRoutes(userController));
-    app.use('/api/v1/auth', authRoutes(userController));
+    app.use('/api/v1/invoice', invoiceRoutes(invoiceController));
 }

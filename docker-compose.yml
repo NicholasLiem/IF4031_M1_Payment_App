@@ -1,23 +1,23 @@
 version: '3.9'
 
 services:
-  rest_db:
-      container_name: rest-pg-db
+  payment_db:
+      container_name: payment-pg-db
       restart: unless-stopped
       build:
         context: .
         dockerfile: dockerfile/Dockerfile.postgres
       ports:
-        - "5433:5432"
+        - "5434:5432"
       env_file:
         - docker.env
       volumes:
-        - rest-pg-data:/var/lib/postgresql/data
+        - payment-pg-data:/var/lib/postgresql/data
       networks:
-        - rest-network
+        - payment-network
 
-  rest_server:
-    container_name: rest-server
+  payment_server:
+    container_name: payment-server
     restart: unless-stopped
     build:
       context: .
@@ -25,26 +25,15 @@ services:
     volumes:
       - ./src:/app
     ports:
-      - "3000:3000"
+      - "8082:3000"
     command: yarn start
     depends_on:
-      - rest_db
+      - payment_db
     networks:
-      - rest-network
-
-  rest_redis:
-    container_name: rest-redis-server
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: dockerfile/Dockerfile.redis-server
-    ports:
-      - "6379:6379"
-    networks:
-      - rest-network
+      - payment-network
 
 volumes:
-  rest-pg-data:
+  payment-pg-data:
 
 networks:
-  rest-network:
+  payment-network:

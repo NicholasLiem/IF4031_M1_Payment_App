@@ -1,12 +1,12 @@
-import {UserService} from '../application/services/user.service';
+import {InvoiceService} from '../application/services/invoice.service';
 import {RepositoryContainer} from './repository.container';
 
 export class ServiceContainer {
     private static instance: ServiceContainer;
-    private userService: UserService;
+    private invoiceService: InvoiceService;
 
     private constructor(repositoryContainer: RepositoryContainer) {
-        this.userService = new UserService(repositoryContainer.getUserRepository());
+        this.invoiceService = new InvoiceService(repositoryContainer.getInvoiceRepository());
     }
 
     public static getInstance(repositoryContainer: RepositoryContainer): ServiceContainer {
@@ -16,7 +16,7 @@ export class ServiceContainer {
         return ServiceContainer.instance;
     }
 
-    public getUserService(): UserService {
-        return this.userService;
+    public getInvoiceService(): InvoiceService {
+        return this.invoiceService;
     }
 }

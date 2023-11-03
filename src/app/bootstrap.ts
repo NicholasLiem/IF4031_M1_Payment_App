@@ -1,9 +1,7 @@
 import {PrismaClient} from "@prisma/client";
 import {RepositoryContainer} from './containers/repository.container';
 import {ServiceContainer} from "./containers/service.container";
-import {UserRepositoryPrisma} from "./adapters/prisma/database/user.repository.prisma";
-
-
+import {InvoiceRepositoryPrisma} from "./adapters/prisma/database/invoice.repository.prisma";
 export function initContainer() : ServiceContainer {
     /**
      * Initialize Prisma Client
@@ -12,17 +10,9 @@ export function initContainer() : ServiceContainer {
     prismaClient.$connect();
 
     /**
-     * Initialize Redis Client
-     */
-
-    /**
-     * Initialize SOAP Client
-     */
-
-    /**
      * Initialize Repositories
      */
-    const userRepository = new UserRepositoryPrisma();
+    const userRepository = new InvoiceRepositoryPrisma();
     const repositoryContainer = RepositoryContainer.getInstance(userRepository);
 
     /**

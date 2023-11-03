@@ -1,21 +1,21 @@
-import {UserRepository} from '../interfaces/repositories/user.repository';
+import {InvoiceRepository} from "../interfaces/repositories/invoice.repository";
 
 export class RepositoryContainer {
     private static instance: RepositoryContainer;
-    private userRepository: UserRepository;
+    private invoiceRepository: InvoiceRepository;
 
-    private constructor(userRepository: UserRepository) {
-        this.userRepository = userRepository;
+    private constructor(invoiceRepository: InvoiceRepository) {
+        this.invoiceRepository = invoiceRepository;
     }
 
-    public static getInstance(userRepository: UserRepository): RepositoryContainer {
+    public static getInstance(invoiceRepository: InvoiceRepository): RepositoryContainer {
         if (!RepositoryContainer.instance) {
-            RepositoryContainer.instance = new RepositoryContainer(userRepository);
+            RepositoryContainer.instance = new RepositoryContainer(invoiceRepository);
         }
         return RepositoryContainer.instance;
     }
 
-    public getUserRepository(): UserRepository {
-        return this.userRepository;
+    public getInvoiceRepository(): InvoiceRepository {
+        return this.invoiceRepository;
     }
 }

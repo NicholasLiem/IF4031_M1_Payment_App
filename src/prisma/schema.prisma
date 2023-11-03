@@ -6,18 +6,21 @@ generator client {
   // binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+model Invoice {
+  id            Int            @id @default(autoincrement())
+  bookingID     Int?
+  eventID       Int?
+  customerID    Int?
+  paymentURL    String?
+  paymentStatus PaymentStatus?
+}
 
-model User {
-  id             Int    @id @default(autoincrement())
-  username       String @unique
-  name           String
-  email          String @unique
-  isAdmin        Boolean
-  hashedPassword String
+enum PaymentStatus {
+  PAID
+  UNPAID
 }
