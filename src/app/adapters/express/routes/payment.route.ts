@@ -4,7 +4,7 @@ import {PaymentController} from "../../../application/controllers/payment.contro
 
 export function paymentRoutes(controller: PaymentController): Router {
     const router = Router();
-    router.get('/pay', apiKeyMiddleware, (req: Request, res: Response) => {
+    router.get('/pay', (req: Request, res: Response) => {
         controller.payment(req, res).then(() => {});
     })
     return router;
