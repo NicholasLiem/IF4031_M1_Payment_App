@@ -8,7 +8,7 @@ export class InvoiceService {
         this.invoiceRepository = invoiceRepository;
     }
 
-    async createInvoice(bookingID: number, eventID: number, customerID: number): Promise<Invoice | null> {
+    async createInvoice(bookingID: number, eventID: number, customerID: number, seatID: number): Promise<Invoice | null> {
         try {
             const basePaymentURL = process.env.BASE_PAYMENT_APP_URL
             //@ts-ignore
@@ -16,6 +16,7 @@ export class InvoiceService {
                 bookingID,
                 eventID,
                 customerID,
+                seatID,
                 paymentURL: 'default_url',
                 paymentStatus: 'UNPAID',
             };
@@ -76,6 +77,7 @@ export class InvoiceService {
             if (!invoice || invoice.paymentStatus == "PAID") {
                 return false
             }
+
             // Simulate a 10% chance of failure
             const random = Math.random();
 

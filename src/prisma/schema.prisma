@@ -13,14 +13,15 @@ datasource db {
 
 model Invoice {
   id            String         @id @default(uuid())
-  bookingID     Int?
-  eventID       Int?
-  customerID    Int?
-  paymentURL    String?
-  paymentStatus PaymentStatus?
+  bookingID     Int
+  eventID       Int
+  customerID    Int
+  seatID        Int
+  paymentURL    String
+  paymentStatus PaymentStatus
 }
 
 enum PaymentStatus {
-  PAID
-  UNPAID
+    SUCCESS
+    FAILED
 }
