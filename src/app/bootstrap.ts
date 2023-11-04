@@ -12,8 +12,8 @@ export function initContainer() : ServiceContainer {
     /**
      * Initialize Repositories
      */
-    const userRepository = new InvoiceRepositoryPrisma();
-    const repositoryContainer = RepositoryContainer.getInstance(userRepository);
+    const invoiceRepository = new InvoiceRepositoryPrisma();
+    const repositoryContainer = RepositoryContainer.getInstance(invoiceRepository);
 
     /**
      * Initialize Services

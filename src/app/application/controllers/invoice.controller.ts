@@ -13,7 +13,7 @@ export class InvoiceController {
     async getInvoice(req: Request, res: Response) {
         try {
             const invoiceId = req.params.invoice_id;
-            const invoice = await this.invoiceService.findInvoiceById(parseInt(invoiceId, 10));
+            const invoice = await this.invoiceService.findInvoiceById(invoiceId);
 
             if (invoice) {
                 return ResponseUtil.sendResponse(res, 200, 'Success fetch data', invoice);
@@ -41,27 +41,26 @@ export class InvoiceController {
         }
     }
 
-    // async updateInvoice(req: Request, res: Response) {
-    //     try {
-    //         const { invoiceId } = req.params; // Extract invoice ID from the request parameters
-    //         const updatedData = req.body; // Extract the data to update
-    //
-    //         const updatedInvoice = await this.invoiceService.updateInvoice(parseInt(invoiceId, 10), updatedData);
-    //
-    //         if (updatedInvoice) {
-    //             return ResponseUtil.sendResponse(res, 200, 'Invoice update successful', updatedInvoice);
-    //         } else {
-    //             return ResponseUtil.sendError(res, 404, 'Invoice not found', null);
-    //         }
-    //     } catch (error) {
-    //         return ResponseUtil.sendError(res, 500, 'Internal server error', error);
-    //     }
-    // }
+    async updateInvoice(req: Request, res: Response) {
+        try {
+            const { invoiceId } = req.params;
+            const updatedData = req.body;
+
+            const updatedInvoice = await this.invoiceService.updateInvoice(invoiceId, updatedData);
+            if (updatedInvoice) {
+                return ResponseUtil.sendResponse(res, 200, 'Invoice update successful', updatedInvoice);
+            } else {
+                return ResponseUtil.sendError(res, 404, 'Invoice not found', null);
+            }
+        } catch (error) {
+            return ResponseUtil.sendError(res, 500, 'Internal server error', error);
+        }
+    }
 
     async deleteInvoice(req: Request, res: Response) {
         try {
             const invoiceId = req.params.invoice_id;
-            await this.invoiceService.deleteInvoice(parseInt(invoiceId, 10));
+            await this.invoiceService.deleteInvoice(invoiceId);
             return ResponseUtil.sendResponse(res, 200, 'Invoice deletion successful', null);
         } catch (error) {
             return ResponseUtil.sendError(res, 500, 'Internal server error', error);

@@ -12,6 +12,10 @@ export function invoiceRoutes(controller: InvoiceController): Router {
         controller.getInvoice(req, res).then(() => {});
     })
 
+    router.put('/:invoice_id', apiKeyMiddleware, (req: Request, res: Response) => {
+        controller.updateInvoice(req, res).then(() => {});
+    })
+
     router.delete('/:invoice_id', apiKeyMiddleware, (req: Request, res: Response) => {
         controller.deleteInvoice(req, res).then(() => {});
     })

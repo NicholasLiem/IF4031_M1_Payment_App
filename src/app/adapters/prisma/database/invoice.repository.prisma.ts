@@ -8,15 +8,19 @@ export class InvoiceRepositoryPrisma implements InvoiceRepository {
         return prisma.invoice.create({data: invoice});
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(id: string): Promise<void> {
         await prisma.invoice.delete({ where: { id } });
     }
 
-    async findById(id: number): Promise<Invoice | null> {
+    async findById(id: string): Promise<Invoice | null> {
         return prisma.invoice.findUnique({where: {id}});
     }
 
-    async update(invoice: Invoice): Promise<Invoice | null> {
+    async update(invoice: Partial<Invoice>): Promise<Invoice | null> {
+        const invoiceId = invoice.id;
+        if (invoiceId === undefined) {
+            return null;
+        }
         return prisma.invoice.update({
             where: {id: invoice.id},
             data: invoice,
