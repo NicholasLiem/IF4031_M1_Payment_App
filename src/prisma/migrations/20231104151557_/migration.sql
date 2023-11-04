@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "PaymentStatus" AS ENUM ('SUCCESS', 'FAILED');
+CREATE TYPE "PaymentStatus" AS ENUM ('SUCCESS', 'FAILED', 'PENDING');
 
 -- CreateTable
 CREATE TABLE "Invoice" (
@@ -8,6 +8,7 @@ CREATE TABLE "Invoice" (
     "eventID" INTEGER NOT NULL,
     "customerID" INTEGER NOT NULL,
     "seatID" INTEGER NOT NULL,
+    "email" TEXT NOT NULL,
     "paymentURL" TEXT NOT NULL,
     "paymentStatus" "PaymentStatus" NOT NULL,
 

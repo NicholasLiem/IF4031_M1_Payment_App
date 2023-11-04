@@ -17,6 +17,7 @@ model Invoice {
   eventID       Int
   customerID    Int
   seatID        Int
+  email         String
   paymentURL    String
   paymentStatus PaymentStatus
 }
@@ -24,4 +25,5 @@ model Invoice {
 enum PaymentStatus {
     SUCCESS
     FAILED
+    PENDING
 }

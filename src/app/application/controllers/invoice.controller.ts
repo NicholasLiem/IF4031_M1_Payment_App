@@ -27,9 +27,9 @@ export class InvoiceController {
 
     async createInvoice(req: Request, res: Response) {
         try {
-            const { booking_id, event_id, customer_id, seat_id} = CreateInvoiceSchema.parse(req.body);
+            const { booking_id, event_id, customer_id, seat_id, email} = CreateInvoiceSchema.parse(req.body);
 
-            const createdInvoice = await this.invoiceService.createInvoice(booking_id, event_id, customer_id, seat_id);
+            const createdInvoice = await this.invoiceService.createInvoice(booking_id, event_id, customer_id, seat_id, email);
 
             if (createdInvoice) {
                 return ResponseUtil.sendResponse(res, 201, 'Invoice creation successful', createdInvoice);

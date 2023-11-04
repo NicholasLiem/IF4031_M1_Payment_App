@@ -1,4 +1,4 @@
-import {Invoice} from '@prisma/client';
+import {Invoice, PaymentStatus} from '@prisma/client';
 import {InvoiceRepository} from '../../interfaces/repositories/invoice.repository';
 
 export class InvoiceService {
@@ -8,17 +8,18 @@ export class InvoiceService {
         this.invoiceRepository = invoiceRepository;
     }
 
-    async createInvoice(bookingID: number, eventID: number, customerID: number, seatID: number): Promise<Invoice | null> {
+    async createInvoice(bookingID: number, eventID: number, customerID: number, seatID: number, email: string): Promise<Invoice | null> {
         try {
             const basePaymentURL = process.env.BASE_PAYMENT_APP_URL
-            //@ts-ignore
+            // @ts-ignore
             const invoice: Invoice = {
                 bookingID,
                 eventID,
                 customerID,
                 seatID,
+                email,
                 paymentURL: 'default_url',
-                paymentStatus: 'UNPAID',
+                paymentStatus: PaymentStatus.PENDING,
             };
 
             const createdInvoice = await this.invoiceRepository.create(invoice);
@@ -70,33 +71,28 @@ export class InvoiceService {
         }
     }
 
-    async payInvoice(id: string): Promise<boolean> {
+    async payInvoice(id: string): Promise<Invoice | null> {
         try {
             // Check if the invoice exists
             const invoice = await this.findInvoiceById(id);
-            if (!invoice || invoice.paymentStatus == "PAID") {
-                return false
+            if (!invoice || invoice.paymentStatus == PaymentStatus.SUCCESS) {
+                return null
             }
 
             // Simulate a 10% chance of failure
             const random = Math.random();
 
             if (random <= 0.1) {
-                return false
+                return null
             }
 
             // Payment succeeded
             // Update the data in the invoice
-            invoice.paymentStatus = "PAID"
-            const updatedInvoice = this.updateInvoice(id, invoice);
-            if (!updatedInvoice){
-                return false;
-            } else {
-                return true;
-            }
+            invoice.paymentStatus = PaymentStatus.SUCCESS
+            return this.updateInvoice(id, invoice);
         } catch (error) {
             console.error(error);
-            return false;
+            return null;
         }
     }
 
