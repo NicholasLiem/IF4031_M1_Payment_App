@@ -4,7 +4,7 @@ CREATE TYPE "PaymentStatus" AS ENUM ('SUCCESS', 'FAILED', 'PENDING');
 -- CreateTable
 CREATE TABLE "Invoice" (
     "id" TEXT NOT NULL,
-    "bookingID" INTEGER NOT NULL,
+    "bookingID" UUID NOT NULL,
     "eventID" INTEGER NOT NULL,
     "customerID" INTEGER NOT NULL,
     "seatID" INTEGER NOT NULL,

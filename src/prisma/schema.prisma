@@ -13,7 +13,7 @@ datasource db {
 
 model Invoice {
   id            String         @id @default(uuid())
-  bookingID     Int
+  bookingID     String         @db.Uuid
   eventID       Int
   customerID    Int
   seatID        Int
@@ -23,7 +23,7 @@ model Invoice {
 }
 
 enum PaymentStatus {
-    SUCCESS
-    FAILED
-    PENDING
+  SUCCESS
+  FAILED
+  PENDING
 }

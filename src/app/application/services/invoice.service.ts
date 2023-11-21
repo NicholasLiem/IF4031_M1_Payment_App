@@ -8,7 +8,7 @@ export class InvoiceService {
         this.invoiceRepository = invoiceRepository;
     }
 
-    async createInvoice(bookingID: number, eventID: number, customerID: number, seatID: number, email: string): Promise<Invoice | null> {
+    async createInvoice(bookingID: string, eventID: number, customerID: number, seatID: number, email: string): Promise<Invoice | null> {
         try {
             const basePaymentURL = process.env.BASE_PAYMENT_APP_URL
             // @ts-ignore
