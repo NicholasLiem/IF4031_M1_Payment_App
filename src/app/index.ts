@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import {routes} from "./routes";
 import {initContainer} from "./bootstrap";
+import bodyParser from 'body-parser';
 
 /**
  * Author: Nicholas Liem
@@ -25,6 +26,11 @@ app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
 }));
 
 const serviceContainer = initContainer();
