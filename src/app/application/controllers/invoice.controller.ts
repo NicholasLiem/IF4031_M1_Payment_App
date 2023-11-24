@@ -57,6 +57,20 @@ export class InvoiceController {
         }
     }
 
+    async cancelInvoice(req : Request, res : Response){
+        try {
+            const invoiceId = req.params.invoice_id
+            const canceledInvoice = await this.invoiceService.cancelInvoice(invoiceId)
+            if(canceledInvoice){
+                return ResponseUtil.sendResponse(res,200,'Invoice has been cancelled',canceledInvoice)
+            }else{
+                return ResponseUtil.sendError(res,404,'Invoice not found',null)
+            }
+        } catch (error) {
+            return ResponseUtil.sendError(res,500,"Internal server error",error)
+        }
+    }
+
     async deleteInvoice(req: Request, res: Response) {
         try {
             const invoiceId = req.params.invoice_id;

@@ -1,4 +1,4 @@
-import {Invoice, PrismaClient} from '@prisma/client';
+import {Invoice, PaymentStatus, PrismaClient} from '@prisma/client';
 import {InvoiceRepository} from '../../../interfaces/repositories/invoice.repository';
 
 const prisma = new PrismaClient();
@@ -25,5 +25,20 @@ export class InvoiceRepositoryPrisma implements InvoiceRepository {
             where: {id: invoice.id},
             data: invoice,
         });
+    }
+
+    async cancel(invoiceId:string):Promise<Invoice|null>{
+        const id = invoiceId
+        if(id == undefined){
+            return null;
+        }
+        return prisma.invoice.update({
+            where:{
+                id
+            },
+            data:{
+                paymentStatus : PaymentStatus.FAILED
+            }
+        })
     }
 }

@@ -4,4 +4,5 @@ export interface InvoiceRepository {
     create(invoice: Invoice): Promise<Invoice | null>;
     update(invoice: Partial<Invoice>): Promise<Invoice | null>;
     delete(id: string): Promise<void>;
+    cancel(id:string):Promise<Invoice|null>;
 }

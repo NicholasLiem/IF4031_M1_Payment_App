@@ -5,7 +5,7 @@
   "main": "./app/index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "nodemon -L",
+    "start": "yarn migrate && nodemon -L",
     "migrate": "npx prisma migrate dev"
   },
   "keywords": [],
@@ -25,7 +25,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@prisma/client": "^5.4.2",
+    "@prisma/client": "^5.6.0",
     "axios": "^1.6.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
