@@ -30,7 +30,9 @@ export class PaymentController {
                 const axiosConfig = {
                     headers: headers,
                 };
-                
+                console.log(webhookURL)
+                console.log("Ini headers : ",headers)
+                console.log("Ini data :",invoiceData)
                 try {
                     // @ts-ignore
                     const response = await axios.post(webhookURL, invoiceData, axiosConfig);
