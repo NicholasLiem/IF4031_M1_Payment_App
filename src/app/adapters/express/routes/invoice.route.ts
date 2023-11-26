@@ -7,7 +7,7 @@ export function invoiceRoutes(controller: InvoiceController): Router {
   router.post("/", apiKeyMiddleware, (req: Request, res: Response) => {
     controller.createInvoice(req, res).then(() => {});
   });
-  router.get("/cancel/:invoice_id", apiKeyMiddleware, (req: Request, res: Response) => {
+  router.put("/cancel/:booking_id", apiKeyMiddleware, (req: Request, res: Response) => {
     controller.cancelInvoice(req, res);
   });
   router.get(

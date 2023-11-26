@@ -54,13 +54,9 @@ export class InvoiceService {
         }
     }
 
-    async cancelInvoice(id : string) : Promise<Invoice | null>{
+    async cancelInvoice(booking_id : string) : Promise<Invoice | null>{
         try {
-            const invoice = this.findInvoiceById(id)
-            if(!invoice){
-                return null;
-            }
-            return await this.invoiceRepository.cancel(id)
+            return await this.invoiceRepository.cancel(booking_id)
         } catch (error) {
             console.error(error);
             return null;

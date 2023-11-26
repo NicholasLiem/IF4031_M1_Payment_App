@@ -89,31 +89,38 @@ export class InvoiceController {
 
   async cancelInvoice(req: Request, res: Response) {
     try {
-      const invoiceId = req.params.invoice_id;
+      const bookingId = req.params.booking_id;
       const canceledInvoice = await this.invoiceService.cancelInvoice(
-        invoiceId
+        bookingId
       );
+      console.log(canceledInvoice)
       if (!canceledInvoice) {
         return ResponseUtil.sendError(res, 404, "Invoice not found", null);
       }
-      const invoiceData = JSON.stringify(canceledInvoice);
-      const webhookURL = process.env.WEBHOOK_URL;
-      const PAYMENT_API_KEY = process.env.PAYMENT_API_KEY;
-      const headers = {
-        Authorization: `Bearer ${PAYMENT_API_KEY}`,
-        "Content-Type": "application/json",
-      };
-      const axiosConfig = {
-        headers: headers,
-      };
-      try {
-        // @ts-ignore
-        const response = await axios.post(webhookURL, invoiceData, axiosConfig);
-        return ResponseUtil.sendResponse(res,200,"Booking has been cancelled",null)
-      } catch (error) {
-        console.log(error)
-        return ResponseUtil.sendResponse(res,500,"Internal server error",null)
-      }
+      return ResponseUtil.sendResponse(
+        res,
+        200,
+        "Invoice update successful",
+        canceledInvoice
+      );
+      // const invoiceData = JSON.stringify(canceledInvoice);
+      // const webhookURL = process.env.WEBHOOK_URL;
+      // const PAYMENT_API_KEY = process.env.PAYMENT_API_KEY;
+      // const headers = {
+      //   Authorization: `Bearer ${PAYMENT_API_KEY}`,
+      //   "Content-Type": "application/json",
+      // };
+      // const axiosConfig = {
+      //   headers: headers,
+      // };
+      // try {
+      //   // @ts-ignore
+      //   const response = await axios.post(webhookURL, invoiceData, axiosConfig);
+      //   return ResponseUtil.sendResponse(res,200,"Booking has been cancelled",null)
+      // } catch (error) {
+      //   console.log(error)
+      //   return ResponseUtil.sendResponse(res,500,"Internal server error",null)
+      // }
     } catch (error) {
       return ResponseUtil.sendError(res, 500, "Internal server error", error);
     }
