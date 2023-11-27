@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { InvoiceService } from "../services/invoice.service";
 import { ResponseUtil } from "../../utils/response.utils";
 import { CreateInvoiceSchema } from "../../schema/invoice/create_invoice.schema";
-import axios from "axios";
+
 export class InvoiceController {
   private invoiceService: InvoiceService;
 
