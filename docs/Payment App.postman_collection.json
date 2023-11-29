@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "9e138045-410f-4f9b-9748-f4e193256740",
+		"name": "Payment App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30701742",
+		"_collection_link": "https://crimson-meadow-438973.postman.co/workspace/PAT~5e4b20a9-a21e-48b8-8eef-baeb56a29ad7/collection/31372685-9e138045-410f-4f9b-9748-f4e193256740?action=share&source=collection_link&creator=30701742"
+	},
+	"item": [
+		{
+			"name": "Create new Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "awwhhcakepbangetdeh",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"booking_id\" : \"3169525d-26fe-4272-ad6f-2f67e8d3bfa4\", \r\n    \"event_id\" : 1, \r\n    \"customer_id\" : 1, \r\n    \"seat_id\" : 1,\r\n    \"email\" : \"nathania.calista01@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_payment_url}}/api/v1/invoice",
+					"host": [
+						"{{base_payment_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay Link",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_payment_url}}/api/v1/payment/pay?invoice_id=",
+					"host": [
+						"{{base_payment_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"payment",
+						"pay"
+					],
+					"query": [
+						{
+							"key": "invoice_id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
