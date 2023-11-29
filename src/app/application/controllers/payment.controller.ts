@@ -1,7 +1,8 @@
-import { Request, Response } from 'express';
-import { InvoiceService } from '../services/invoice.service';
-import { ResponseUtil } from '../../utils/response.utils';
+import {Request, Response} from 'express';
+import {InvoiceService, PaymentErrorCode} from '../services/invoice.service';
+import {ResponseUtil} from '../../utils/response.utils';
 import axios from 'axios';
+import {PaymentStatus} from "@prisma/client";
 
 export class PaymentController {
     private invoiceService: InvoiceService;
@@ -15,9 +16,18 @@ export class PaymentController {
             const { invoice_id } = req.query;
 
             if (typeof invoice_id === "string") {
-                const invoice = await this.invoiceService.payInvoice(invoice_id);
-                if (!invoice) {
-                    return ResponseUtil.sendResponse(res, 200, 'Payment request failed', null);
+                let invoice = await this.invoiceService.payInvoice(invoice_id);
+
+                if (invoice === PaymentErrorCode.UnknownError) {
+                    return ResponseUtil.sendResponse(res, 200, 'Payment request failed, unknown error, please retry payment again', null);
+                }
+
+                if (invoice === PaymentErrorCode.InvoiceNotFound){
+                    return ResponseUtil.sendResponse(res, 200, 'Payment request failed, invoice not found', null);
+                }
+
+                if (invoice === PaymentErrorCode.PaymentAlreadySuccess){
+                    return ResponseUtil.sendResponse(res, 200, 'Payment request failed, invoice already paid', null);
                 }
 
                 const invoiceData = JSON.stringify(invoice);

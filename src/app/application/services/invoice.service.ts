@@ -1,6 +1,13 @@
 import {Invoice, PaymentStatus} from '@prisma/client';
 import {InvoiceRepository} from '../../interfaces/repositories/invoice.repository';
 
+export enum PaymentErrorCode {
+    InvoiceNotFound,
+    PaymentAlreadySuccess,
+    RandomFailure,
+    UnknownError
+}
+
 export class InvoiceService {
     private invoiceRepository: InvoiceRepository;
 
@@ -80,19 +87,24 @@ export class InvoiceService {
         }
     }
 
-    async payInvoice(id: string): Promise<Invoice | null> {
+    async payInvoice(id: string): Promise<Invoice | PaymentErrorCode | null> {
         try {
             // Check if the invoice exists
             const invoice = await this.findInvoiceById(id);
-            if (!invoice || invoice.paymentStatus == PaymentStatus.SUCCESS) {
-                return null
+            if (!invoice) {
+                return PaymentErrorCode.InvoiceNotFound;
+            }
+
+            // @ts-ignore
+            if (invoice.paymentStatus == PaymentStatus.SUCCESS) {
+                return PaymentErrorCode.PaymentAlreadySuccess;
             }
 
             // Simulate a 10% chance of failure
             const random = Math.random();
-
             if (random <= 0.1) {
-                return null
+                invoice.paymentStatus = PaymentStatus.FAILED
+                return this.updateInvoice(id, invoice);
             }
 
             // Payment succeeded
@@ -101,7 +113,7 @@ export class InvoiceService {
             return this.updateInvoice(id, invoice);
         } catch (error) {
             console.error(error);
-            return null;
+            return PaymentErrorCode.UnknownError;
         }
     }
 
